@@ -48,5 +48,5 @@ typedef struct s_item{
 }	t_item;
 
 t_item *make_list(void);
-
+t_item *create_item(char *title, int id, int type, char *publisher);
 #endif
