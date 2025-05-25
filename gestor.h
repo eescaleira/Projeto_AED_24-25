@@ -46,20 +46,34 @@ typedef struct s_item{
 	struct s_item *next;
 }	t_item;
 
-t_item *make_list(void);
-t_item *create_item(char *title, int id, int type, char *publisher);
-void print_item(t_item *item);
-int list_length(t_item* head);
-t_item* get_node_at(t_item* head, int index);
+int main();
 
+void print_menu(t_item *item_list);
+
+/* Algorythms */
 t_item* orderByIdItem(t_item* head);
 t_item* orderbyname(t_item* head) ;
 t_item* binary_search_by_id(t_item* head, int id);
-void add_item(t_item *head, t_item *new_item);
-void print_menu(t_item *item_list);
+
+/* general utils */
 void remove_item(t_item *head, t_item *item_to_remove);
 void client_info(t_item *item);
-void free_client(t_client *client);
+int list_length(t_item* head);
+t_item* get_node_at(t_item* head, int index);
+
+/* data add */
+t_item *make_list(void);
+t_item *create_item(char *title, int id, int type, char *publisher);
+void add_item(t_item *head, t_item *new_item);
+
+
+/* prints */
+void print_item(t_item *item);
 void print_list(t_item *head);
+
+
+/* frees */
+void free_item(t_item *item);
 void free_list(t_item *head);
+void free_client(t_client *client);
 #endif
