@@ -17,6 +17,18 @@ t_item *create_item(char *title, int id, int type, char *publisher) {
 	item->next = NULL;
 }
 
+void add_item(t_item *head, t_item *new_item) {
+	if (head == NULL) {
+		head = new_item;
+	} else {
+		t_item *temp = head;
+		while (temp->next != NULL) {
+			temp = temp->next;
+		}
+		temp->next = new_item;
+		new_item->prev = temp;
+	}
+}
 
 
 
@@ -45,7 +57,7 @@ t_item *make_list(void){
 	t_item *seven = create_item("seven", -1, 1, "publisher");	
 	six->next = seven;
 	seven->prev = six;
-	t_item *eight = create_item("eight", 8, 1, "publisher");
+	t_item *eight = create_item("eight", 20, 1, "publisher");
 	seven->next = eight;
 	eight->prev = seven;
 	t_item *nine = create_item("nine", 9, 1, "publisher");
