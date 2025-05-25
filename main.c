@@ -1,6 +1,6 @@
 #include "gestor.h"
 
-
+//insertion sort
 t_item* orderbyname(t_item* head) {
     if (head == NULL || head->next == NULL)
         return head;
@@ -14,7 +14,6 @@ t_item* orderbyname(t_item* head) {
         if (sorted == NULL) {
             sorted = current;
         } else if (strcmp(current->title, sorted->title) < 0) {
-            // Inserir no início
             current->next = sorted;
             sorted->prev = current;
             sorted = current;
@@ -34,23 +33,99 @@ t_item* orderbyname(t_item* head) {
     return sorted;
 }
 
+t_item* orderByIdItem(t_item* head) {
+    if (!head || !head->next) 
+        return head;
+    t_item* sorted = NULL;
+    while (head) {
+        t_item* min = head;
+        t_item* current = head->next;
+        while (current) {
+            if (current->id < min->id) {
+                min = current;
+            }
+            current = current->next;
+        }
+        if (min->prev)
+            min->prev->next = min->next;
+        if (min->next)
+            min->next->prev = min->prev;
+        if (min == head)
+            head = head->next;
+        min->prev = NULL;
+        min->next = NULL;
+        if (!sorted) {
+            sorted = min;
+        } else {
+            t_item* tail = sorted;
+            while (tail->next)
+                tail = tail->next;
+            tail->next = min;
+            min->prev = tail;
+        }
+    }
+    return sorted;
+}
+
+int list_length(t_item* head) {
+    int length = 0;
+    while (head) {
+        length++;
+        head = head->next;
+    }
+    return length;
+}
+
+t_item* get_node_at(t_item* head, int index) {
+    int i = 0;
+    while (head && i < index) {
+        head = head->next;
+        i++;
+    }
+    return head;
+}
+
+t_item* binary_search_by_id(t_item* head, int id) {
+    int left = 0;
+    int right = list_length(head) - 1;
+
+    while (left <= right) {
+        int mid = (left + right) / 2;
+        t_item* mid_node = get_node_at(head, mid);
+
+        if (!mid_node) break;
+
+        if (mid_node->id == id) {
+            return mid_node;
+        } else if (mid_node->id < id) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+
+    return NULL;
+}
+
  
-int main(){
+int main(){ 
 	t_item *item_list = make_list();
 	if (item_list == NULL) {
 		fprintf(stderr, "Failed to create item list\n");
 		return EXIT_FAILURE;
 	}
-	t_item *temp = item_list;
-	while(temp != NULL){
-		printf("Item ID: %s\n", temp->title);
-		temp = temp->next;
-	}
-	item_list = orderbyname(item_list);
-	printf("\n\n");
-	while(item_list != NULL){
-		printf("Item ID: %s\n", item_list->title);
-		item_list = item_list->next;
-	}
+    t_item *temp = item_list;
+    while (temp) {
+        printf("ID: %d, Title: %s\n", temp->id, temp->title);
+        temp = temp->next;
+    }
+    printf("\n\n");
+    temp = orderByIdItem (item_list);
+    while (temp) {
+        printf("ID: %d, Title: %s\n", temp->id, temp->title);
+        temp = temp->next;
+    }
+    printf("\n\n");
+    printf("%i\n", binary_search_by_id(item_list, 26)->id);
 	return 0;
 }

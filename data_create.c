@@ -17,18 +17,23 @@ t_item *create_item(char *title, int id, int type, char *publisher) {
 	item->next = NULL;
 }
 
+
+
+
+
 t_item *make_list(void){
 	t_item *head = create_item("head", 0, 0, "head");
-	t_item *one = create_item("one", 1, 1, "publisher");
+	head->prev = NULL;
+	t_item *one = create_item("one", 26, 1, "publisher");
 	head->next = one;
 	one->prev = head;
-	t_item *two = create_item("two", 2, 1, "publisher");
+	t_item *two = create_item("two", 8, 1, "publisher");
 	one->next = two;
 	two->prev = one;
-	t_item *three = create_item("three", 3, 1, "publisher");
+	t_item *three = create_item("three", 101, 1, "publisher");
 	two->next = three;
 	three->prev = two;
-	t_item *four = create_item("four", 4, 1, "publisher");
+	t_item *four = create_item("four", 6, 1, "publisher");
 	three->next = four;
 	four->prev = three;
 	t_item *five = create_item("five", 5, 1, "publisher");
@@ -37,7 +42,7 @@ t_item *make_list(void){
 	t_item *six = create_item("six", 6, 1, "publisher");
 	five->next = six;
 	six->prev = five;
-	t_item *seven = create_item("seven", 7, 1, "publisher");	
+	t_item *seven = create_item("seven", -1, 1, "publisher");	
 	six->next = seven;
 	seven->prev = six;
 	t_item *eight = create_item("eight", 8, 1, "publisher");
